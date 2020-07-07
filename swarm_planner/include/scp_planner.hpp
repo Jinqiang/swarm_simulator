@@ -15,6 +15,8 @@
 #include <mission.hpp>
 #include <param.hpp>
 
+#include <fstream>
+
 ILOSTLBEGIN
 
 namespace SwarmPlanning {
@@ -28,15 +30,15 @@ namespace SwarmPlanning {
                 : mission(_mission),
                   param(_param) {
             h = param.time_step;
-            T = 34;
+            T = 34;  //will be set later
             K = round(T / h) + 1;         // number of segments
             N = mission.qn;
             outdim = 3;                 // number of outputs (x,y,z)
 
             p_max = 5;
-            v_max = 10;
-            a_max = 10;
-            j_max = 10;
+            v_max = mission.max_vel[0][0]; //assuming here that all the agents have same max_vel, and that is the same in all the axis
+            a_max = mission.max_vel[0][0]; //assuming here that all the agents have same max_vel, and that is the same in all the axis
+            j_max = 1000; //No limits in j_max
             epsilon = 0.01;
 
             u_prev = Eigen::MatrixXd::Zero(outdim * N * K, 1);
@@ -49,14 +51,44 @@ namespace SwarmPlanning {
             u.resize(outdim * N * K);
             try {
                 timer.reset();
-                buildConstMtx();
-                timer.stop();
-                ROS_INFO_STREAM("Constraint Matrix runtime: " << timer.elapsedSeconds());
 
-                timer.reset();
-                solveQP(env, log);
-                timer.stop();
-                ROS_INFO_STREAM("QP runtime: " << timer.elapsedSeconds());
+                //
+                bool converged=false;
+                double total_time=8.0*sqrt(2)/v_max;
+                while (converged==false){
+                    
+                    total_time=total_time+0.4;
+
+                     T = total_time;
+                    std::cout<<"Trying with total_time= "<<T<<std::endl;
+
+                     K = round(T / h) + 1;         // number of segments
+                     u_prev = Eigen::MatrixXd::Zero(outdim * N * K, 1);
+            
+                buildConstMtx();
+                //timer.stop();
+                //ROS_INFO_STREAM("Constraint Matrix runtime: " << timer.elapsedSeconds());
+
+                //timer.reset();
+
+                converged=solveQP(env, log);
+
+                //timer.stop();
+                //ROS_INFO_STREAM("QP runtime: " << timer.elapsedSeconds());
+
+                    }
+
+            double execution_time=T;
+            ROS_INFO_STREAM("Results: Execution time: " << execution_time );
+
+            //////////////////////////////////
+            std::ofstream outfile;
+            outfile.open("/home/jtorde/Desktop/ws/src/swarm_simulator/swarm_planner/scripts/results.txt", std::ios::out | std::ios::app); // append instead of overwrite
+            outfile << "Results: Execution time: " << std::right << std::setw(50) <<execution_time <<"\n"; 
+            outfile.close();
+            /////////////////////////////////////
+
+
             }
             catch (IloException &e) {
                 ROS_ERROR_STREAM("Concert exception caught: " << e);
@@ -72,6 +104,10 @@ namespace SwarmPlanning {
             return true;
         }
 
+
+        double getT(){
+            return T;
+        }
     private:
         Mission mission;
         Param param;
@@ -92,7 +128,7 @@ namespace SwarmPlanning {
             build_ineq_const();
         }
 
-        void solveQP(const IloEnv &env, bool log) {
+        bool solveQP(const IloEnv &env, bool log) {
             Timer timer;
             IloNum cost_total, cost_prev;
 
@@ -121,8 +157,9 @@ namespace SwarmPlanning {
 
                 // Optimize the problem and obtain solution.
                 if (!cplex.solve()) {
-                    env.error() << "Failed to optimize QP, Check ~/.ros/QPresult.txt" << endl;
-                    throw (-1);
+                    env.error() << "Failed to optimize QP" << endl;
+                    return false;
+                    //throw (-1);
                 }
 
                 IloNumArray vals(env);

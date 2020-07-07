@@ -1,3 +1,4 @@
+// clang-format off
 // ROS
 #include <ros/ros.h>
 
@@ -17,6 +18,8 @@
 #include <rbp_corridor.hpp>
 #include <rbp_planner.hpp>
 #include <rbp_publisher.hpp>
+
+#include <fstream>
 
 using namespace SwarmPlanning;
 
@@ -113,10 +116,21 @@ int main(int argc, char* argv[]) {
                 }
             }
             timer_step.stop();
-            ROS_INFO_STREAM("SwarmPlanner runtime: " << timer_step.elapsedSeconds());
+            //ROS_INFO_STREAM("SwarmPlanner runtime: " << timer_step.elapsedSeconds());
 
-            timer_total.stop();
-            ROS_INFO_STREAM("Overall runtime: " << timer_total.elapsedSeconds());
+            timer_total.stop();       
+            ROS_INFO_STREAM("Results: Overall Computation time: " << timer_total.elapsedSeconds());
+
+            //////////////////////////////////
+            std::ofstream outfile;
+            outfile.open("/home/jtorde/Desktop/ws/src/swarm_simulator/swarm_planner/scripts/results.txt", std::ios::out | std::ios::app); // append instead of overwrite
+            outfile << "Results: Overall Computation time: " << std::right << std::setw(50) <<timer_total.elapsedSeconds()<<"\n"; 
+            outfile.close();
+            /////////////////////////////////////
+
+            // for (auto t_i:planResult.T){
+            //     std::cout<<"t_i= "<<t_i<<std::endl;
+            // }
 
             // Plot Planning Result
             RBPPublisher_obj.reset(new RBPPublisher(nh, planResult, mission, param));
@@ -130,6 +144,8 @@ int main(int argc, char* argv[]) {
             current_time = ros::Time::now().toSec() - start_time;
             RBPPublisher_obj.get()->update(current_time);
             RBPPublisher_obj.get()->publish();
+            // ros::spin();
+            // return 0;
         }
         ros::spinOnce();
         rate.sleep();

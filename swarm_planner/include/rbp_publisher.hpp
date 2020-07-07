@@ -1,3 +1,4 @@
+// clang-format off
 #pragma once
 
 // Eigen
@@ -26,6 +27,8 @@ namespace plt = matplotlibcpp;
 #include <init_traj_planner.hpp>
 #include <mission.hpp>
 #include <param.hpp>
+
+#include <fstream>
 
 namespace SwarmPlanning {
     class RBPPublisher {
@@ -75,7 +78,7 @@ namespace SwarmPlanning {
             pubs_relBox.resize(qn);
             for (int qi = 0; qi < qn; qi++) {
                 std::string mav_name = "/mav" + std::to_string(qi);
-                pubs_traj_coef[qi] = nh.advertise<std_msgs::Float64MultiArray>("/traj_coef" + mav_name, 1);
+                pubs_traj_coef[qi] = nh.advertise<std_msgs::Float64MultiArray>("/traj_coef" + mav_name, 1,true);
                 pubs_traj[qi] = nh.advertise<nav_msgs::Path>("/desired_trajectory" + mav_name, 1);
                 pubs_relBox[qi] = nh.advertise<visualization_msgs::MarkerArray>("/relative_box" + mav_name, 1);
             }
@@ -122,8 +125,22 @@ namespace SwarmPlanning {
                 plot_quad_dynamics();
                 plot_safety_margin_ratio();
             }
-            ROS_INFO_STREAM("Global min_dist between agents: " << safety_margin_ratio);
-            ROS_INFO_STREAM("Total flight distance: " << trajectory_length_sum());
+            ROS_INFO_STREAM("Results: Safety_margin_ratio: " << safety_margin_ratio*100);
+            ROS_INFO_STREAM("Results: Total flight distance: " << trajectory_length_sum());
+
+            //////////////////////////////////
+            std::ofstream outfile;
+            outfile.open("/home/jtorde/Desktop/ws/src/swarm_simulator/swarm_planner/scripts/results.txt", std::ios::out | std::ios::app); // append instead of overwrite
+            outfile << "Results: Safety_margin_ratio: " << std::right << std::setw(50) <<safety_margin_ratio<<"\n"; 
+            outfile.close();
+            /////////////////////////////////////
+
+            //////////////////////////////////
+            outfile.open("/home/jtorde/Desktop/ws/src/swarm_simulator/swarm_planner/scripts/results.txt", std::ios::out | std::ios::app); // append instead of overwrite
+            outfile << "Results: Total flight distance: " << std::right << std::setw(50) <<trajectory_length_sum()<<"\n"; 
+            outfile.close();
+            /////////////////////////////////////
+
         }
 
 //    void plot_real_time(){
@@ -763,7 +780,7 @@ namespace SwarmPlanning {
             plt::title("acceleration -z axis");
 
             plt::legend();
-            plt::show(false);
+            plt::show(true);
         }
 
         void update_safety_margin_ratio() {

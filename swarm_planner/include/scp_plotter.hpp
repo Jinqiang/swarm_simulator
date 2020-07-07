@@ -1,3 +1,4 @@
+// clang-format off
 #pragma once
 
 #include <Eigen/Dense>
@@ -12,6 +13,8 @@
 #include "matplotlibcpp.h"
 namespace plt = matplotlibcpp;
 
+#include <fstream>
+
 namespace SwarmPlanning {
     class SCPPlotter {
     public:
@@ -24,7 +27,7 @@ namespace SwarmPlanning {
             N = round(SCPPlanner_obj->msgs_traj_info.data[0]);
             K = round(SCPPlanner_obj->msgs_traj_info.data[1]);
             h = SCPPlanner_obj->msgs_traj_info.data[2];
-            T = 34;
+            T = SCPPlanner_obj->getT();
             outdim = 3;
 
             p_curr.resize(N);
@@ -38,9 +41,19 @@ namespace SwarmPlanning {
         }
 
         void plot() {
-            update_traj(0.1);
+            update_traj(0.01);
             plot_distance_between_quad();
             ROS_INFO_STREAM("TrajPlotter: total length=" << trajectory_length_sum());
+
+            //////////////////////////////////
+            std::ofstream outfile;
+            outfile.open("/home/jtorde/Desktop/ws/src/swarm_simulator/swarm_planner/scripts/results.txt", std::ios::out | std::ios::app); // append instead of overwrite
+            outfile << "Results: total distance:" <<std::right << std::setw(50) <<trajectory_length_sum()<<"\n"; 
+            outfile.close();
+            /////////////////////////////////////
+
+
+
         }
 
     private:
@@ -224,6 +237,15 @@ namespace SwarmPlanning {
             plt::plot(t, min_dist);
 
             ROS_INFO_STREAM("global min_dist: " << global_min_dist);
+            ROS_INFO_STREAM("quad_size: " << mission.quad_size[0]);
+            ROS_INFO_STREAM("safety margin ratio: " << global_min_dist/(2*mission.quad_size[0]));
+
+            //////////////////////////////////
+            std::ofstream outfile;
+            outfile.open("/home/jtorde/Desktop/ws/src/swarm_simulator/swarm_planner/scripts/results.txt", std::ios::out | std::ios::app); // append instead of overwrite
+            outfile << "Results: safety margin ratio:" << std::right << std::setw(50) <<global_min_dist/(2*mission.quad_size[0])<<"\n"; 
+            outfile.close();
+            /////////////////////////////////////
 
             plt::title("Ellipsoidal Distance between Quadrotor");
 

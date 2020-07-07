@@ -11,6 +11,8 @@
 #include <scp_publisher.hpp>
 #include <scp_plotter.hpp>
 
+#include <fstream>
+
 using namespace SwarmPlanning;
 
 bool has_path = false;
@@ -60,7 +62,13 @@ int main(int argc, char* argv[]) {
             }
 
             timer_total.stop();
-            ROS_INFO_STREAM("Overall runtime: " << timer_total.elapsedSeconds());
+            ROS_INFO_STREAM("Overall Computation time: " << timer_total.elapsedSeconds());
+            //////////////////////////////////
+            std::ofstream outfile;
+            outfile.open("/home/jtorde/Desktop/ws/src/swarm_simulator/swarm_planner/scripts/results.txt", std::ios::out | std::ios::app); // append instead of overwrite
+            outfile << "Results: Overall Computation time: " <<std::right << std::setw(50) << timer_total.elapsedSeconds()<<"\n"; 
+            outfile.close();
+            /////////////////////////////////////
 
             // Initialize Trajectory Publisher
             SCPPublisher_obj.reset(new SCPPublisher(nh, SCPPlanner_obj, mission, param));
@@ -77,6 +85,8 @@ int main(int argc, char* argv[]) {
             current_time = ros::Time::now().toSec() - start_time;
             SCPPublisher_obj.get()->update(current_time);
             SCPPublisher_obj.get()->publish();
+            // ros::spin();
+            // return 0;
         }
         ros::spinOnce();
         rate.sleep();

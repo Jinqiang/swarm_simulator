@@ -24,7 +24,7 @@
   <arg name="runsim"                default="true"/>
   <arg name="log"                   default="true"/>
 
-  <arg name="mission"               default="mission_2agents_50.json"/>
+  <arg name="mission"               default="mission_16agents_15.json"/> <!-- mission_16agents_15_circle -->
   <arg name="replay"                default="true"/>
 
   <!-- Environment -->
@@ -55,7 +55,8 @@
   <arg name="box_z_res"             default="0.1"/>
 
   <!-- RBPPlanner Parameters -->
-  <arg name="plan_time_step"        default="1"/>
+  <arg name="plan_time_scale"       default="true"/>
+  <arg name="plan_time_step"        default="0.1"/>
   <arg name="plan_downwash"         default="2.0"/>
   <arg name="plan_n"                default="5"/>
   <arg name="plan_phi"              default="3"/>  
@@ -106,11 +107,10 @@
 
     <param name="plan/sequential"            value="$(arg plan_sequential)" />
     <param name="plan/batch_size"            value="$(arg plan_batch_size)" />
-    <param name="plan/N_b"                   value="$(arg plan_N_b)" />
     <param name="plan/iteration"             value="$(arg plan_iteration)" />
   </node>
 
-  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find swarm_planner)/launch/rviz_config/config_8agents.rviz" if="$(arg runsim)"/>
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find swarm_planner)/launch/rviz_config/config_16agents.rviz" if="$(arg runsim)"/>
 
 <!-- Nodes End -->
 </launch>

@@ -77,6 +77,18 @@ Visualization Manager:
           Value: true
         mav1/base_link:
           Value: true
+        mav2/base_link:
+          Value: true
+        mav3/base_link:
+          Value: true
+        mav4/base_link:
+          Value: true
+        mav5/base_link:
+          Value: true
+        mav6/base_link:
+          Value: true
+        mav7/base_link:
+          Value: true
         world:
           Value: true
       Marker Scale: 1
@@ -89,6 +101,18 @@ Visualization Manager:
           mav0/base_link:
             {}
           mav1/base_link:
+            {}
+          mav2/base_link:
+            {}
+          mav3/base_link:
+            {}
+          mav4/base_link:
+            {}
+          mav5/base_link:
+            {}
+          mav6/base_link:
+            {}
+          mav7/base_link:
             {}
       Update Interval: 0
       Value: true
@@ -281,7 +305,7 @@ Visualization Manager:
       Marker Topic: /occupied_cells_vis_array
       Name: MarkerArray
       Namespaces:
-        map: true
+        {}
       Queue Size: 10
       Value: true
     - Class: rviz/MarkerArray
@@ -305,8 +329,7 @@ Visualization Manager:
       Marker Topic: /initTraj
       Name: MarkerArray
       Namespaces:
-        mav0: true
-        mav1: true
+        {}
       Queue Size: 100
       Value: true
     - Class: rviz/MarkerArray
@@ -314,8 +337,7 @@ Visualization Manager:
       Marker Topic: /feasible_box
       Name: MarkerArray
       Namespaces:
-        mav0: true
-        mav1: false
+        {}
       Queue Size: 100
       Value: true
     - Class: rviz/MarkerArray
@@ -324,6 +346,7 @@ Visualization Manager:
       Name: MarkerArray
       Namespaces:
         colBox: true
+        initTraj: true
       Queue Size: 100
       Value: true
   Enabled: true
@@ -353,21 +376,26 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Angle: 0
-      Class: rviz/TopDownOrtho
+      Class: rviz/Orbit
+      Distance: 43.145626068115234
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
+      Focal Point:
+        X: -1.5658044815063477
+        Y: 1.6614699363708496
+        Z: -0.005218505859375
+      Focal Shape Fixed Size: true
+      Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 70.49016571044922
+      Pitch: 1.5697963237762451
       Target Frame: world
-      Value: TopDownOrtho (rviz)
-      X: 0.10818812251091003
-      Y: 0.597491443157196
+      Value: Orbit (rviz)
+      Yaw: 0
     Saved: ~
 Window Geometry:
   Displays:

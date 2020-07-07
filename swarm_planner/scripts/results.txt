@@ -1,0 +1,137 @@
+
+
+
+
+============      RBP PLANNER     ================
+==================================================
+
+============batch_size= 1================
+Results: Execution time:                                            15.6229
+Results: Overall Computation time:                                           0.227945
+Results: Safety_margin_ratio:                                            1.05541
+Results: Total flight distance:                                            90.8296
+============batch_size= 2================
+Results: Execution time:                                            15.6229
+Results: Overall Computation time:                                           0.236126
+Results: Safety_margin_ratio:                                            1.07504
+Results: Total flight distance:                                            91.7886
+============batch_size= 4================
+Results: Execution time:                                            14.2026
+Results: Overall Computation time:                                           0.277143
+Results: Safety_margin_ratio:                                            1.02272
+Results: Total flight distance:                                            92.1334
+============batch_size= 8================
+Results: Execution time:                                            14.2026
+Results: Overall Computation time:                                           0.461457
+Results: Safety_margin_ratio:                                            1.05685
+Results: Total flight distance:                                            93.7214
+============      SCP PLANNER     ================
+==================================================
+
+============step_size= 0.3================
+______
+Results: Execution time:                                            7.45512
+Results: Overall Computation time:                                            1.46926
+Results: safety margin ratio:                                          0.383076
+Results: total distance:                                           77.2597
+______
+Results: Execution time:                                            7.05512
+Results: Overall Computation time:                                            1.00154
+Results: safety margin ratio:                                          0.234916
+Results: total distance:                                           77.0627
+______
+Results: Execution time:                                            7.45512
+Results: Overall Computation time:                                            1.19556
+Results: safety margin ratio:                                          0.475477
+Results: total distance:                                           77.3034
+______
+Results: Execution time:                                            7.05512
+Results: Overall Computation time:                                           0.983935
+Results: safety margin ratio:                                          0.141502
+Results: total distance:                                           77.0443
+______
+Results: Execution time:                                            7.05512
+Results: Overall Computation time:                                            1.10187
+Results: safety margin ratio:                                          0.161933
+Results: total distance:                                           77.0495
+
+============step_size= 0.25================
+______
+Results: Execution time:                                            7.85512
+Results: Overall Computation time:                                            3.00717
+Results: safety margin ratio:                                          0.497418
+Results: total distance:                                           101.745
+______
+Results: Execution time:                                            7.85512
+Results: Overall Computation time:                                              3.075
+Results: safety margin ratio:                                          0.204396
+Results: total distance:                                           101.713
+______
+Results: Execution time:                                            7.85512
+Results: Overall Computation time:                                            3.13536
+Results: safety margin ratio:                                          0.149107
+Results: total distance:                                           101.744
+______
+Results: Execution time:                                            7.85512
+Results: Overall Computation time:                                            3.18986
+Results: safety margin ratio:                                          0.167665
+Results: total distance:                                           101.755
+______
+Results: Execution time:                                            7.85512
+Results: Overall Computation time:                                            3.08861
+Results: safety margin ratio:                                          0.311845
+Results: total distance:                                           101.706
+============step_size= 0.2================
+______
+Results: Execution time:                                            7.05512
+Results: Overall Computation time:                                            2.53225
+Results: safety margin ratio:                                          0.514542
+Results: total distance:                                           90.8852
+______
+Results: Execution time:                                            7.05512
+Results: Overall Computation time:                                            2.47341
+Results: safety margin ratio:                                          0.690473
+Results: total distance:                                           90.9314
+______
+Results: Execution time:                                            7.05512
+Results: Overall Computation time:                                            2.47855
+Results: safety margin ratio:                                          0.334941
+Results: total distance:                                           90.9219
+______
+Results: Execution time:                                            11.0551
+Results: Overall Computation time:                                            33.7497
+Results: safety margin ratio:                                          0.545259
+Results: total distance:                                           90.9153
+______
+Results: Execution time:                                            7.05512
+Results: Overall Computation time:                                            2.47224
+Results: safety margin ratio:                                          0.692025
+Results: total distance:                                           90.9323
+
+============step_size= 0.17================
+______
+Results: Execution time:                                            10.6551
+Results: Overall Computation time:                                            45.4055
+Results: safety margin ratio:                                          0.700626
+Results: total distance:                                           77.3406
+______
+Results: Execution time:                                            13.0551
+Results: Overall Computation time:                                            98.8355
+Results: safety margin ratio:                                          0.960657
+Results: total distance:                                           77.3966
+______
+Results: Execution time:                                            8.25512
+Results: Overall Computation time:                                            13.4061
+Results: safety margin ratio:                                          0.704295
+Results: total distance:                                            77.293
+______
+Results: Execution time:                                            8.25512
+Results: Overall Computation time:                                            13.5566
+Results: safety margin ratio:                                          0.685288
+Results: total distance:                                           77.3219
+______
+Results: Execution time:                                            8.65512
+Results: Overall Computation time:                                            15.6725
+Results: safety margin ratio:                                          0.826457
+Results: total distance:                                           77.3756
+

@@ -13,6 +13,8 @@
 #include <mission.hpp>
 #include <param.hpp>
 
+#include <fstream>
+
 ILOSTLBEGIN
 
 namespace SwarmPlanning {
@@ -75,6 +77,17 @@ namespace SwarmPlanning {
                 timer.stop();
                 ROS_INFO_STREAM("RBPPlanner: timeScale runtime=" << timer.elapsedSeconds());
             }
+
+            std::cout<<"=========================="<<std::endl;
+            double execution_time=planResult_ptr->T.back()-planResult_ptr->T.front();
+            ROS_INFO_STREAM("Results: Execution time: " <<std::right << std::setw(50) << execution_time);
+
+            //////////////////////////////////
+            std::ofstream outfile;
+            outfile.open("/home/jtorde/Desktop/ws/src/swarm_simulator/swarm_planner/scripts/results.txt", std::ios::out | std::ios::app); // append instead of overwrite
+            outfile << "Results: Execution time: " <<std::right << std::setw(50)  << execution_time <<"\n"; 
+            outfile.close();
+            /////////////////////////////////////
 
             generateROSMsg();
             if(param.log){

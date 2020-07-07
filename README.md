@@ -1,3 +1,13 @@
+## changes [ACL]
+Inclusion of a line search on time for the SCP algorithm (to get the minimum time for which the optimization converges)
+
+## instructions [ACL]
+
+```
+cd scripts
+python run_many_sims.py
+```
+
 # swarm_simulator
 
 This package presents an efficient multi-agent trajectory planning algorithm which generates safe trajectories in obstacle-dense environments. 
